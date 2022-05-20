@@ -1,0 +1,120 @@
+
+
+
+body {
+    margin: 20px;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif; 
+}
+
+
+
+
+.navbar-list {
+    list-style-type: none;
+    padding: 8px 0px;
+    width: 25%;
+    background-color: #f1f1f1;
+    height: 100%;
+
+
+    /* Border  for the whole list <ul> */
+    border-width: 1px;
+    border-style: solid;
+    border-color: #555555;
+    
+}
+
+
+.nav-list-item a {
+    display: block;
+    color: #000;
+    width: 60px;
+    padding: 8px 16px;
+    text-decoration: none;
+    text-align: center;
+
+
+    /* Border Bottom for each <li> */
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #555555;
+}
+
+
+.nav-list-item:last-child a {
+    border-bottom: none;
+}
+
+
+
+.nav-list-item:hover a {
+    background-color: #555;
+    color: white;
+    
+}
+
+
+.nav-list-item:active a {
+    background-color: #04AA6D;
+    color: white;
+}
+
+
+
+
+
+.box1 {
+    background-image: url(../img/mustangboss302.jpg);
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+    width: 300px;
+    padding: 40px;
+    border: solid gold 6px;
+    margin: 10px;
+    line-height: 1.4;
+    font-size: 18px;
+    font-weight: lighter;
+    color: rgb(153, 0, 255);
+}
+
+.box2 {
+    background-color: #04AA6D;
+    text-align: center;
+    width: 300px;
+    padding: 20px;
+    border: dotted black 6px;
+    margin: 10px;
+    color: red;
+}
+
+
+
+.box3 {
+    background-color: slateblue;
+    text-align: center;
+    width: 300px;
+    padding: 20px;
+    border: inset blueviolet 6px;
+    margin: 10px;
+    color: #04AA6D;
+}
+
+.link-p {
+    color: firebrick;
+    text-decoration: none;
+}
+
+.link-p:visited {
+    color: rgb(0, 0, 0);
+}
+
+
+.link-p:hover,
+.link-p:focus {
+    color: #c60bff;
+}
+
+.link-p:active {
+    color: aqua;
+}

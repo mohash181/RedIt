@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 
 class Post(models.Model):
     
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, primary_key=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
     published = models.BooleanField(default=False)
@@ -18,6 +18,11 @@ class Post(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="Created On")
     date_published = models.DateTimeField( blank=True, null=True, verbose_name="Published On")
     date_edited = models.DateTimeField(blank=True, null=True, verbose_name="Edited On")
+
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+    votes = models.IntegerField(default=0)
+    utd_ratio = models.IntegerField(default=0)
     
 
 
@@ -27,6 +32,15 @@ class Post(models.Model):
         else:
             return f"{self.title} By {self.user} on {self.date_created}"
     
+
+
+    # ---------- VOTES METHODS ----------
+    def sum_votes(self):
+        self.downvotes = -abs(self.downvotes)
+        self.votes = self.upvotes + self.downvotes
+        return self.votes
+    # ---------- END VOTES METHODS ----------
+
 
     # ---------- DRAFT METHODS ----------
     def save_as_draft(self):
@@ -99,82 +113,79 @@ class Post(models.Model):
 
     # ---------- END EDIT METHODS ----------
 
+    # ---------- CHILD MODELS METHODS ----------
+    def get_images(self):
+        return self.images.all()
+
+    def get_files(self):
+        return self.files.all()
+    
+    def get_videos(self):
+        return self.videos.all()
+
     def get_votes(self):
-        return self.votes.difference
+        return self.votes
+    # ---------- END CHILD MODELS METHODS ----------
 
 #----------------------------
 
 
-class Images(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, primary_key=True)
-    animage = models.ImageField()
+class PostImage(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="itsimages")
+    animage = models.ImageField(blank=True, null=True, upload_to="posts_images/")
 
     def __str__(self):
-        return f"An image in {self.post.title}"
+        return f"An image on {self.post.title}"
 
-    class Meta:
-        verbose_name = "Image"
-        verbose_name_plural = "Images"
+  
     
 
 
-class Files(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, primary_key=True)
-    afile = models.FileField()
+class PostFile(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="itsfiles")
+    afile = models.FileField(blank=True, null=True, upload_to="posts_files/")
 
     def __str__(self):
-        return f"A file in {self.post.title}"
+        return f"A file on {self.post.title}"
 
-    class Meta:
-        verbose_name = "File"
-        verbose_name_plural = "Files"
+    
 
-class Videos(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, primary_key=True)
-    vid = models.FileField()
+class PostVideo(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="itsvideos")
+    vid = models.FileField(blank=True, null=True, upload_to="posts_vids")
 
     def __str__(self):
-        return f"A video in {self.post.title}"
+        return f"A video on {self.post.title}"
 
-    class Meta:
-        verbose_name = "Video"
-        verbose_name_plural = "Videos"
+    
 
-class Votes(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE, primary_key=True)
-    upvotes = models.IntegerField(default=0)
-    downvotes = models.IntegerField(default=0)
-    difference = models.IntegerField(default=0)
-    downvoted_by = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    upvoted_by = models.ForeignKey(self.post.user, on_delete=models.CASCADE)
+
+
+
+class Comment(models.Model):
+
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="itscomments")
+    user = models.ForeignKey(get_user_model() , on_delete=models.CASCADE, related_name="theircomments")
+    text = models.TextField(blank=False, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    edited = models.BooleanField(default=False)    
 
 
     def __str__(self):
-        return f"{self.difference} votes on {self.post}"
-
-    def apply_difference(self):
-        self.difference = self.upvotes + self.downvotes
-        return self.difference
-
-    class Meta:
-        verbose_name = "Votes"
-        verbose_name_plural = "Votes"
+        return f"Comment By {self.user} on {self.post.title}"
 
 
+    # ---------- EDIT METHODS ---------
+    def edit_comment(self):
+        # Changes the instance's values that spicifies that
+        # it's been edited.
+        self.edited = True
+        self.save()
 
+    def is_edited(self):
+        return True if self.edited else False
 
-
-
-
-
-# class Comment(models.Model):
-
-#     head = models.on
-
-
-
-
-
+    # ---------- END EDIT METHODS ----------
 
 
 

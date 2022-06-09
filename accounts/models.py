@@ -50,7 +50,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # ______________________
 
     def clean(self):
-        super.clean()
+        super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
     
     def get_full_name(self):

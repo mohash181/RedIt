@@ -10,11 +10,13 @@ class Post(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
+    
     published = models.BooleanField(default=False)
     draft = models.BooleanField(default=False, help_text=_("Save a post as a draft"))
     archived = models.BooleanField(default=False, help_text=_("You may archive a post instead of deleting it."))
     was_archived = models.BooleanField(default=False, help_text=_("Post was archived at some point."))
     edited = models.BooleanField(default=False)
+    
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="Created On")
     date_published = models.DateTimeField( blank=True, null=True, verbose_name="Published On")
     date_edited = models.DateTimeField(blank=True, null=True, verbose_name="Edited On")
@@ -136,6 +138,8 @@ class PostImage(models.Model):
 
     def __str__(self):
         return f"An image on {self.post.title}"
+
+
 
   
     

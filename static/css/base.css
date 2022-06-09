@@ -2,8 +2,7 @@
 
 
 body {
-    margin: 20px;
-    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif; 
+    text-align: center;
 }
 
 
@@ -117,4 +116,15 @@ body {
 
 .link-p:active {
     color: aqua;
+}
+
+
+
+
+#changeMe {
+    width: 400px;
+    height: 400px;
+    margin: 20px;
+    background: black;
+
 }

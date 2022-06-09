@@ -1,15 +1,38 @@
 {% extends 'base.html' %}
+{% load static %}
 
 <html>
 <head>
     {% block title %}
         <title>Home|Blog</title>
     {% endblock title %}
+
+
+    
+
+    {% block sp-styling %}
+        <link href="{% static 'css/feed.css' %}" rel="stylesheet">
+    {% endblock sp-styling %}
+
 </head>
 <body>
+    
+    {% block content %}
 
-
-
+    
+    
+    <div class="posts-list">
+        {% for post in rposts %}
+            <div class="post-block">
+                <h1>{{ post.title }}</h1>
+                <h3>Published on {{ post.date_published }}</h3>
+                <p>By {{ post.user }}</p>
+                <p>{{ post.text }}</p>
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
+    {% endblock content %}
 
 </body>
 

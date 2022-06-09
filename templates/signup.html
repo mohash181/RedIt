@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+    {% block title %}
+        <title>Sign Up|Redit</title>
+    {% endblock title %}
+
+    
+    {% block navcss %}
+    {% endblock navcss %}
+    
+    {% block sp-styling %}
+        <link href="{% static 'css/authstyle.css' %}" rel="stylesheet">
+    {% endblock sp-styling %}
+    
+</head>
+<body>
+    {% block navbar %}
+    {% endblock navbar %}
+
+    {% block content %}
+        <div class="signup-box">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    {% endblock content %}
+</body>
+</html>

@@ -6,7 +6,7 @@
 <head>
     
     {% block title %}
-        <title>Log In|Redit</title>
+        <title>Logging you out..</title>
     {% endblock title %}
 
     
@@ -23,13 +23,6 @@
     {% endblock navbar %}
 
     {% block content %}
-        <div class="signup-box">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Log In</button>
-            </form>
-        </div>
     {% endblock content %}
 </body>
 </html>

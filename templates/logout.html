@@ -6,7 +6,7 @@
 <head>
     
     {% block title %}
-        <title>Log In|Redit</title>
+        <title>Log Out|Redit</title>
     {% endblock title %}
 
     
@@ -24,11 +24,14 @@
 
     {% block content %}
         <div class="signup-box">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Log In</button>
-            </form>
+            <h5>Are you sure you want to log out?</h5>
+            <a href="{% url 'accounts:loggedout' %}">
+                <button>Log Out</button>
+            </a>
+            
+            <a href="{% url 'pages:home' %}">
+                <button>No!</button>
+            </a>
         </div>
     {% endblock content %}
 </body>

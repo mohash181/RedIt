@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}
+        <title>New Post</title>
+    {% endblock title %}
+
+    {% block sp-styling %}
+        <link href="{% static 'css/create.css' %}" rel="stylesheet">
+    {% endblock sp-styling %}
+</head>
+<body>
+
+    {% block content %}
+    {% if user.is_authenticated %}
+        <div class="new-post-container">
+            <div class="new-post">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- <input type="hidden" value={{ request.user }} name={{form.user.label}}> -->
+                    {{ form.as_p }}
+                    
+                    <input type="submit" name="draft" value="Save as draft">
+                    <input type="submit" name="publish" value="Publish">
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <p>You should <a href="{% url 'accounts:login' %}">Log In</a> first sucker</p>
+    {% endif %}
+    {% endblock content %}
+    
+</body>
+</html>

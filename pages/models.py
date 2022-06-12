@@ -1,15 +1,14 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-
-
+from django.utils import timezone
 
 
 class Post(models.Model):
     
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
+    title = models.CharField(max_length=200, blank=False)
+    text = models.TextField(blank=False)
     
     published = models.BooleanField(default=False)
     draft = models.BooleanField(default=False, help_text=_("Save a post as a draft"))
@@ -45,9 +44,7 @@ class Post(models.Model):
 
 
     # ---------- DRAFT METHODS ----------
-    def save_as_draft(self):
-        self.draft = True
-        self.save()
+    
 
     def is_draft(self):
         return True if self.draft else False
@@ -57,8 +54,7 @@ class Post(models.Model):
 
     # ---------- PUBLISH METHODS ----------
     def publish(self):
-        self.date_published = timezone.now
-        self.published = True
+        self.date_published = timezone.now()
         self.save()
     
     def is_published(self):

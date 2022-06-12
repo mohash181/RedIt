@@ -34,8 +34,9 @@ def loginview(request):
             login(request, user)
             return redirect("pages:home")
         else:
-            form = AuthenticationForm(request.POST)
-            return render(request, "login.html", {"form":form})        
+            msg = ("Something is wrong.")
+            form = AuthenticationForm()
+            return render(request, "login.html", {"form":form, "msg":msg})        
     else:
         form = AuthenticationForm()
         return render(request, "login.html", {"form":form})

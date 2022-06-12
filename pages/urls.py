@@ -5,6 +5,6 @@ app_name = "pages"
 
 urlpatterns = [
     path("home/", homeview, name="home"),
-    path("new_post/", new_postview, name="new_post"),
+    path("create/", new_postview, name="create"),
     path("js/", jsview, name="javascript")
 ]
